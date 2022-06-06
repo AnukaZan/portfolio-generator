@@ -1,13 +1,14 @@
-const profileDataArgs = process.argv.slice(2, process.argv.length); //save command text after 3 indeces
+const fs = require('fs');
 
-const printProfileData = profileDataArr => {
-    for (let i=0; i< profileDataArr.length; i++){
-        console.log(profileDataArr[i]);
-    }
+const generatePage = require('./src/page-template.js');
 
-    console.log('===============');
+const profileDataArgs = process.argv.slice(2); //save command text after 3 indeces
 
-    profileDataArr.forEach(profileItem=>console.log(profileItem));
-};
+const [name, github] = profileDataArgs; //assign elements of array to variable names 
 
-printProfileData(profileDataArgs);
+
+fs.writeFile('index.html', generatePage(name, github), err=>{ //1st file name, 2nd output file, 3rd handling errors
+    if (err) throw new Error (err); //if error then stop execution of code
+
+    console.log('Portfolio complete! Check out the index.html to see the output!');
+});
